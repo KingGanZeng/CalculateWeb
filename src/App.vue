@@ -9,15 +9,19 @@
     </el-header>
     <el-container>
       <el-aside>
-        <el-radio-group v-model="isCollapse" style="margin-bottom: 20px;">
-          <el-radio-button :label="false">展开</el-radio-button>
-          <el-radio-button :label="true">收起</el-radio-button>
-        </el-radio-group>
+        <div class="more-button-wrapper" @click="changeCollapse">
+          <i class="el-icon-more"></i>
+        </div>
         <el-menu default-active="1-4-1"
+                 router
                  class="el-menu-vertical-demo"
                  @open="handleOpen"
                  @close="handleClose"
                  :collapse="isCollapse">
+          <el-menu-item index="/">
+            <i class="icon-home"></i>
+            <span slot="title">首页</span>
+          </el-menu-item>
           <el-submenu index="1">
             <template slot="title">
               <i class="el-icon-location"></i>
@@ -36,17 +40,9 @@
               <el-menu-item index="1-4-1">选项1</el-menu-item>
             </el-submenu>
           </el-submenu>
-          <el-menu-item index="2">
-            <i class="el-icon-menu"></i>
-            <span slot="title">导航二</span>
-          </el-menu-item>
-          <el-menu-item index="3" disabled>
-            <i class="el-icon-document"></i>
-            <span slot="title">导航三</span>
-          </el-menu-item>
-          <el-menu-item index="4">
-            <i class="el-icon-setting"></i>
-            <span slot="title">导航四</span>
+          <el-menu-item index="/introduction">
+            <i class="icon-file-text2"></i>
+            <span slot="title">使用说明</span>
           </el-menu-item>
         </el-menu>
       </el-aside>
@@ -58,8 +54,19 @@
 </template>
 
 <script>
+import Vue from 'vue';
+import VueRouter from 'vue-router';
+import routes from './router/index';
+
+Vue.use(VueRouter);
+const router = new VueRouter({
+  routes,
+});
+
+console.log(111);
 export default {
   name: 'App',
+  router,
   data() {
     return {
       translateName: {
@@ -70,6 +77,9 @@ export default {
     };
   },
   methods: {
+    changeCollapse() {
+      this.isCollapse = !this.isCollapse;
+    },
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
     },
@@ -91,7 +101,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="less">
   body {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -130,14 +140,16 @@ export default {
   }
 
   .el-menu-vertical-demo:not(.el-menu--collapse) {
+    width: 200px;
     min-height: 400px;
   }
 
-  .el-menu-item i.fa {
-    margin-right: 5px;
-    width: 24px;
+  .more-button-wrapper{
     text-align: center;
-    font-size: 18px;
-    vertical-align: middle;
+    padding: 20px 0;
+  }
+
+  .more-button-wrapper:hover {
+    cursor: pointer;
   }
 </style>
