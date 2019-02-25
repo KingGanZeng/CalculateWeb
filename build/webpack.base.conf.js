@@ -79,14 +79,6 @@ module.exports = {
         test: /\.(svg)$/,
         loader: 'file-loader',
       },
-      {
-        test: /\.less$/,
-        use: [
-          'vue-style-loader',
-          'css-loader',
-          'less-loader'
-        ]
-      }
     ]
   },
   node: {
