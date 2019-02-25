@@ -17,68 +17,59 @@
         <el-row class="manual-loader-container">
             <el-col class="manual-activities border-shadow">
                 <div class="title">活动定义</div>
-                <div class="example">例如：A=[a,3]</div>
-                <div class="input-wrapper">
-                    <el-form class="input-item"
-                             ref="form"
-                             :model="activities"
-                             size="mini">
-                        <el-form-item is="activity-form-item"
-                                      :indexNum="item.indexNum"
-                                      v-for="item in activities.list"
-                                      :key="item.indexNum">
-                        </el-form-item>
-                    </el-form>
-                    <div class="plus-button">
-                        <i class="el-icon-circle-plus-outline" @click="addActivity"></i>
-                    </div>
-                    <el-button type="primary" @click="activitiesSubmit">下一步</el-button>
-                    <el-button>重置</el-button>
+                <div class="example">例如：A=[a,1]</div>
+                <div class="input-wrapper"
+                    is="activity-form"
+                    :activities="activities">
                 </div>
             </el-col>
             <el-col class="manual-components border-shadow">
                 <div class="title">构件定义</div>
                 <div class="example">例如：P=A;(B||2C)</div>
+                <div class="input-wrapper"
+                     is="component-form"
+                     :components="components">
+                </div>
+            </el-col>
+            <el-col class="manual-architecture border-shadow">
+                <div class="title">软件架构</div>
+                <div class="example">例如：P||2Q#3W</div>
                 <div class="input-wrapper">
                     <el-form class="input-item"
                              ref="form"
-                             :model="activities"
+                             :model="architecture"
                              size="mini">
-                        <el-form-item is="component-form-item"
-                                      :indexNum="item.indexNum"
-                                      v-for="item in components.list"
-                                      :key="item.indexNum">
+                        <el-form-item>
+                            <el-col :span="8">
+                                <el-input v-model="architecture.calculate"></el-input>
+                            </el-col>
                         </el-form-item>
                     </el-form>
-                    <div class="plus-button">
-                        <i class="el-icon-circle-plus-outline" @click="addComponent"></i>
-                    </div>
-                    <el-button type="primary" @click="componentsSubmit">下一步</el-button>
-                    <el-button>重置</el-button>
+                    <el-button type="primary"
+                               size="small"
+                               round
+                               @click="onSubmit">提交</el-button>
                 </div>
-            </el-col>
-            <el-col class="manual-architecture">
-                <div class="title">软件架构</div>
-                <div class="input-wrapper"></div>
             </el-col>
         </el-row>
     </el-container>
 </template>
 
 <script>
-import ActivityFormItem from './common/ActivityFormItem';
-import ComponentFormItem from './common/ComponentFormItem';
+import ActivityForm from './common/ActivityForm';
+import ComponentForm from './common/ComponentForm';
 
 export default {
   name: 'ManualLoader',
   components: {
-    'activity-form-item': ActivityFormItem,
-    'component-form-item': ComponentFormItem,
+    'activity-form': ActivityForm,
+    'component-form': ComponentForm,
   },
   data() {
     return {
       activities: {
         list: [{
+          labelName: '活动1',
           indexNum: 1,
           activityName: 'A',
           atomName: 'a',
@@ -87,34 +78,22 @@ export default {
       },
       components: {
         list: [{
+          labelName: '构件1',
           indexNum: 1,
-          componentName: 'A',
-          componentCal: 'A',
+          componentName: 'P',
+          componentCal: 'A;(B||2C)',
         }],
+      },
+      architecture: {
+        calculate: '',
       },
     };
   },
   methods: {
-    activitiesSubmit() {
-      console.log(this.activities);
-    },
-    componentsSubmit() {
-      console.log(this.components);
-    },
-    addActivity() {
-      this.activities.list.push({
-        indexNum: this.activities.list.length + 1,
-        activityName: 'A',
-        atomName: 'a',
-        number: 1,
-      });
-    },
-    addComponent() {
-      this.components.list.push({
-        indexNum: this.components.list.length + 1,
-        componentName: 'A',
-        componentCal: 'A',
-      });
+    onSubmit() {
+      console.log('活动', this.activities);
+      console.log('构件', this.components);
+      console.log('架构', this.architecture);
     },
   },
 };
@@ -147,6 +126,11 @@ export default {
         margin-bottom: 18px;
     }
 
+    .manual-architecture {
+        padding: 15px;
+        margin-bottom: 18px;
+    }
+
     .title {
         padding-bottom: 10px;
         border-bottom: 1px solid #E3E3E3;
@@ -156,25 +140,6 @@ export default {
         margin: 10px 0 18px;
         color: #999999;
         font-size: 14px;
-    }
-
-    .plus-button {
-        width: 60px;
-        margin-bottom: 18px;
-        text-align: center;
-        &:hover {
-            cursor: pointer;
-        }
-        i {
-            font-size: 18px;
-            transition-property: color;
-            transition-duration: .3s;
-            transition-timing-function: ease-out;
-            &:hover {
-
-                color: #0aa8f4;
-            }
-        }
     }
 
     .input-wrapper {
