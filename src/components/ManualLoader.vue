@@ -2,7 +2,7 @@
     <el-container class="manual-loader">
         <el-row class="manual-loader-header">
             <el-col>
-                <el-steps :active="0" align-center>
+                <el-steps :active="inputComplete" align-center>
                     <el-step title="步骤1"
                              description="请输入活动定义"></el-step>
                     <el-step title="步骤2"
@@ -20,7 +20,8 @@
                 <div class="example">例如：A=[a,1]</div>
                 <div class="input-wrapper"
                     is="activity-form"
-                    :activities="activities">
+                    :activities="activities"
+                    @changeInputComplete="changeInputComplete">
                 </div>
             </el-col>
             <el-col class="manual-components border-shadow">
@@ -28,7 +29,8 @@
                 <div class="example">例如：P=A;(B||2C)</div>
                 <div class="input-wrapper"
                      is="component-form"
-                     :components="components">
+                     :components="components"
+                     @changeInputComplete="changeInputComplete">
                 </div>
             </el-col>
             <el-col class="manual-architecture border-shadow">
@@ -39,16 +41,22 @@
                              ref="form"
                              :model="architecture"
                              size="mini">
-                        <el-form-item>
+                        <el-form-item prop="calculate"
+                            :rules="{
+                                required: true, message: '请输入软件架构', trigger: 'blur'
+                            }">
                             <el-col :span="8">
                                 <el-input v-model="architecture.calculate"></el-input>
                             </el-col>
                         </el-form-item>
+                        <el-form-item>
+                            <el-button type="primary"
+                                size="small"
+                                round
+                                @click="onSubmit"
+                                 :loading="isSubmitting">提交</el-button>
+                        </el-form-item>
                     </el-form>
-                    <el-button type="primary"
-                               size="small"
-                               round
-                               @click="onSubmit">提交</el-button>
                 </div>
             </el-col>
         </el-row>
@@ -67,6 +75,7 @@ export default {
   },
   data() {
     return {
+      inputComplete: 0, // 当前完成步骤数
       activities: {
         list: [{
           labelName: '活动1',
@@ -87,13 +96,44 @@ export default {
       architecture: {
         calculate: '',
       },
+      isSubmitting: false, // 提交状态
     };
   },
   methods: {
     onSubmit() {
+      this.inputComplete = 3;
+      this.isSubmitting = true;
       console.log('活动', this.activities);
       console.log('构件', this.components);
       console.log('架构', this.architecture);
+      let code = '';
+      if (this.activities.list.length < 1
+        || this.components.list.length < 1
+        || this.architecture.calculate < 1) {
+        this.$message({
+          message: '警告，请确认输入项均不为空',
+          type: 'warning',
+        });
+        this.isSubmitting = false;
+      }
+      this.activities.list.forEach((item, index) => {
+        const activityCal = `${item.activityName}=[${item.atomName},${item.number}]`;
+        if (index === 0) {
+          code = `${activityCal}`;
+        } else {
+          code = `${code}\n${activityCal}`;
+        }
+      });
+      this.components.list.forEach((item) => {
+        const componentCal = `${item.componentName}=${item.componentCal}`;
+        code = `${code}\n${componentCal}`;
+      });
+      code = `${code}\n${this.architecture.calculate}\n`;
+      console.log(code);
+      // TODO: 发送请求给远端
+    },
+    changeInputComplete(num) {
+      this.inputComplete = num;
     },
   },
 };
@@ -102,6 +142,7 @@ export default {
 <style scoped lang="less">
     .manual-loader {
         position: relative;
+        height: 100%;
     }
 
     .manual-loader-header {
@@ -110,10 +151,14 @@ export default {
         top: 0;
     }
 
+    /*输入面板固定*/
     .manual-loader-container {
         width: 100%;
         position: absolute;
-        top: 80px;
+        top: 120px;
+        bottom: 0;
+        overflow: auto;
+        padding: 1px 15px 1px 1px;
     }
 
     .manual-activities {

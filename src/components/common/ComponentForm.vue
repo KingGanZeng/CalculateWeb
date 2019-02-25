@@ -21,16 +21,20 @@
                 </el-col>
             </el-form-item>
         </el-form>
-        <div class="plus-button">
-            <i class="el-icon-circle-plus-outline" @click="addComponent"></i>
-        </div>
+      <div class="plus-and-remove-button">
+        <i class="el-icon-circle-plus-outline"
+           @click="addComponent"></i>
+        <i class="el-icon-remove-outline"
+           @click="removeComponent"></i>
+      </div>
         <el-button type="primary"
                    size="small"
                    round
                    @click="componentsSubmit">下一步</el-button>
         <el-button
                 size="small"
-                round>重置</el-button>
+                round
+                @click="resetComponents">重置</el-button>
     </div>
 </template>
 
@@ -48,7 +52,15 @@ export default {
   },
   mounted() {},
   methods: {
-    componentsSubmit() {},
+    /**
+     * 更新步骤数
+     */
+    componentsSubmit() {
+      this.$emit('changeInputComplete', 2);
+    },
+    /**
+     * 添加构件
+     */
     addComponent() {
       const index = this.components.list.length + 1;
       this.components.list.push({
@@ -58,12 +70,31 @@ export default {
         componentCal: '',
       });
     },
+    /**
+     * 移除构件
+     */
+    removeComponent() {
+      this.components.list.pop();
+    },
+    /**
+     * 重置表单
+     */
+    resetComponents() {
+      this.components = {
+        list: [{
+          labelName: '构件1',
+          indexNum: 1,
+          componentName: 'P',
+          componentCal: 'A;(B||2C)',
+        }],
+      };
+    },
   },
 };
 </script>
 
 <style scoped lang="less">
-    .plus-button {
+    .plus-and-remove-button {
         width: 60px;
         margin-bottom: 18px;
         text-align: center;
@@ -71,13 +102,15 @@ export default {
             cursor: pointer;
         }
         i {
-            font-size: 18px;
+            font-size: 20px;
             transition-property: color;
             transition-duration: .3s;
             transition-timing-function: ease-out;
-            &:hover {
-
+            &:nth-child(2n+1):hover {
                 color: #0aa8f4;
+            }
+            &:nth-child(2n):hover {
+                color: #F56C6C;
             }
         }
     }
