@@ -1,23 +1,26 @@
 <template>
   <el-container>
     <el-header>
-      <span>{{translateName.headerName}}</span>
-      <span style="float: right;">
-        <a href="#" @click="changeLanguage">中文</a>/
-        <a href="#" @click="changeLanguage">English</a>
-      </span>
+      <span style="font-size: 18px;">{{translateName.headerName}}</span>
+      <!--<span style="float: right;">-->
+        <!--<a href="#" @click="changeLanguage">中文</a>/-->
+        <!--<a href="#" @click="changeLanguage">English</a>-->
+      <!--</span>-->
     </el-header>
     <el-container>
       <el-aside>
         <div class="more-button-wrapper" @click="changeCollapse">
-          <i class="el-icon-more"></i>
+          <i class="el-icon-more" :style="beActive"></i>
         </div>
-        <el-menu default-active="1-4-1"
+        <el-menu default-active="this.$router.path"
                  router
                  class="el-menu-vertical-demo"
                  @open="handleOpen"
                  @close="handleClose"
-                 :collapse="isCollapse">
+                 :collapse="isCollapse"
+                 background-color="#545c64"
+                 text-color="#fff"
+                 active-text-color="#ffd04b">
           <el-menu-item index="/">
             <i class="icon-home"></i>
             <span slot="title">首页</span>
@@ -25,20 +28,13 @@
           <el-submenu index="1">
             <template slot="title">
               <i class="el-icon-location"></i>
-              <span slot="title">导航一</span>
+              <span slot="title">工具使用</span>
             </template>
             <el-menu-item-group>
-              <span slot="title">分组一</span>
-              <el-menu-item index="1-1">选项1</el-menu-item>
-              <el-menu-item index="1-2">选项2</el-menu-item>
+              <span slot="title">选择输入方式</span>
+              <el-menu-item index="fileLoader">文件导入</el-menu-item>
+              <el-menu-item index="manualLoader">手动输入</el-menu-item>
             </el-menu-item-group>
-            <el-menu-item-group title="分组2">
-              <el-menu-item index="1-3">选项3</el-menu-item>
-            </el-menu-item-group>
-            <el-submenu index="1-4">
-              <span slot="title">选项4</span>
-              <el-menu-item index="1-4-1">选项1</el-menu-item>
-            </el-submenu>
           </el-submenu>
           <el-menu-item index="/introduction">
             <i class="icon-file-text2"></i>
@@ -74,11 +70,13 @@ export default {
         navName: ['工具说明', '运行计算'],
       },
       isCollapse: true,
+      beActive: '',
     };
   },
   methods: {
     changeCollapse() {
       this.isCollapse = !this.isCollapse;
+      this.beActive = this.isCollapse ? '' : 'color:#ffd04b';
     },
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
@@ -114,8 +112,8 @@ export default {
     height: 100%;
   }
   .el-header, .el-footer {
-    background-color: #B3C0D1;
-    color: #333;
+    background-color: #545c64;
+    color: #fff;
   }
 
   .el-header {
@@ -125,8 +123,8 @@ export default {
 
   .el-aside {
     width: auto!important;
-    background-color: #D3DCE6;
-    color: #333;
+    background-color: #545c64;
+    color: #909399;
     display: block;
     -ms-flex-preferred-size: auto;
     flex-basis: auto;
@@ -135,8 +133,12 @@ export default {
   }
 
   .el-main {
-    background-color: #E9EEF3;
+    background-color: #fff;
     color: #333;
+  }
+
+  .el-menu {
+    border: none;
   }
 
   .el-menu-vertical-demo:not(.el-menu--collapse) {
@@ -146,10 +148,11 @@ export default {
 
   .more-button-wrapper{
     text-align: center;
+    border-top: 1px solid #909399;
+    border-bottom: 1px solid #909399;
     padding: 20px 0;
-  }
-
-  .more-button-wrapper:hover {
-    cursor: pointer;
+    &:hover {
+      cursor: pointer;
+    }
   }
 </style>

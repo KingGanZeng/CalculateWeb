@@ -1,0 +1,122 @@
+@border-color: #E3E3E3;
+
+body {
+  margin: 0 0 0 5px;
+  font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+}
+
+img {
+  pointer-events: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:active, a:hover {
+  outline-width: 0;
+}
+
+ul, li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.el-menu [class^="icon-"] {
+  width: 24px;
+  display: inline-block;
+  margin-right: 5px;
+  font-size: 16px;
+  text-align: center;
+}
+
+.same-border {
+  position: absolute;
+  z-index: 10;
+  content: "";
+  background-color: @border-color;
+  -webkit-transform: scaleY(.5);
+  transform: scaleY(.5);
+}
+
+.half-border-bottom, .half-border-top, .half-border-left, .half-border-right{
+  position: relative;
+}
+
+.half-border-bottom:after {
+  bottom: 0;
+  right: 0;
+  left: 0;
+  height: 1px;
+  .same-border();
+}
+
+.half-border-top:before {
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 1px;
+  .same-border();
+}
+
+.half-border-left:before {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 1px;
+  .same-border();
+}
+
+.half-border-right:after {
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 1px;
+  .same-border();
+}
+
+.border-shadow {
+  border-radius: 5px;
+  background-color: white;
+  -webkit-box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28);
+  box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28);
+}
+
+.border-bottom {
+  border-bottom: 1px solid #e3e3e3;
+}
+
+.tab-line {
+  .tab-item {
+    position: relative;
+    background-color: #fff;
+    box-sizing: content-box;
+    border-bottom: 2px solid transparent;
+    padding: 11px 16px 10px;
+    webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    &.active {
+      font-weight: 700;
+      color: #205081;
+      border-bottom: 2px solid #205081;
+    }
+    &:before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      left: 50%;
+      right: 50%;
+      bottom: -2px;
+      background: #205081;
+      height: 2px;
+      transition-property: left,right;
+      transition-duration: .3s;
+      transition-timing-function: ease-out;
+    }
+  }
+  .active:before, .tab-item:hover:before {
+    left: 5px;
+    right: 5px;
+  }
+}
