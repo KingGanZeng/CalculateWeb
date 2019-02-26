@@ -10,7 +10,7 @@
     <el-container>
       <el-aside>
         <div class="more-button-wrapper" @click="changeCollapse">
-          <i class="el-icon-more" :style="beActive"></i>
+          <i class="icon-indent-increase" :class="beActive"></i>
         </div>
         <el-menu default-active="this.$router.path"
                  router
@@ -27,13 +27,23 @@
           </el-menu-item>
           <el-submenu index="1">
             <template slot="title">
-              <i class="el-icon-location"></i>
+              <i class="icon-stack"></i>
               <span slot="title">工具使用</span>
             </template>
             <el-menu-item-group>
               <span slot="title">选择输入方式</span>
-              <el-menu-item index="fileLoader" disabled>文件导入</el-menu-item>
-              <el-menu-item index="manualLoader">手动输入</el-menu-item>
+              <el-menu-item index="fileLoader">
+                <template slot="title">
+                  <i class="icon-upload"></i>
+                  <span slot="title">文件导入</span>
+                </template>
+              </el-menu-item>
+              <el-menu-item index="manualLoader">
+                <template slot="title">
+                  <i class="icon-keyboard"></i>
+                  <span slot="title">手动输入</span>
+                </template>
+              </el-menu-item>
             </el-menu-item-group>
           </el-submenu>
           <el-menu-item index="/introduction">
@@ -69,13 +79,13 @@ export default {
         navName: ['工具说明', '运行计算'],
       },
       isCollapse: true,
-      beActive: '',
+      beActive: [], // 激活class
     };
   },
   methods: {
     changeCollapse() {
       this.isCollapse = !this.isCollapse;
-      this.beActive = this.isCollapse ? '' : 'color:#ffd04b';
+      this.beActive = this.isCollapse ? [] : ['isActive'];
     },
     handleOpen(key, keyPath) {
       console.log(key, keyPath);
@@ -152,6 +162,18 @@ export default {
     padding: 20px 0;
     &:hover {
       cursor: pointer;
+      background-color: rgb(67, 74, 80);
+    }
+    [class^="icon-"] {
+      -webkit-transition: ease .3s;
+      -moz-transition: ease .3s;
+      -ms-transition: ease .3s;
+      -o-transition: ease .3s;
+      transition: ease .3s;
+    }
+    .isActive {
+      color: #ffd04b;
+      transform: rotate(180deg);
     }
   }
 </style>

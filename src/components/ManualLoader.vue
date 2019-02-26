@@ -97,7 +97,6 @@
                     是否计算平均值?
                     <span style="display: inline-block;margin-left: 10px;" >
                         <el-button
-                            type="primary"
                             size="mini"
                             round
                             @click="calculateAverage">是</el-button>
@@ -206,7 +205,7 @@ export default {
      */
     getResult(inputCode) {
       axios
-        .post('http://localhost:8080/javaWeb/Servlet', qs.stringify({
+        .post('Servlet', qs.stringify({
           code: inputCode,
         }))
         .then((response) => {
@@ -238,11 +237,17 @@ export default {
     changeInputComplete(num) {
       this.inputComplete = num;
     },
+    /**
+     * 计算平均值（展示）
+     */
     calculateAverage() {
       const average = `average = ${this.average}`;
       this.result.push(average);
       this.confirmAverage = false;
     },
+    /**
+     * 不展示平均值
+     */
     denyAverage() {
       this.confirmAverage = false;
     },
