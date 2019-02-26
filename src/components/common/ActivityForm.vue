@@ -15,7 +15,7 @@
                             placeholder="A"
                             maxlength="1"></el-input>
                     </el-col>
-                    <el-col class="line" :span="2">=  [</el-col>
+                    <el-col class="line" :span="3">=  [</el-col>
                     <el-col :span="5">
                         <el-input v-model="item.atomName"
                             placeholder="a"></el-input>
@@ -55,11 +55,6 @@ export default {
       type: Object,
     },
   },
-  data() {
-    return {
-    };
-  },
-  mounted() {},
   methods: {
     /**
      * 更新步骤数
@@ -95,6 +90,12 @@ export default {
           indexNum: 1,
           activityName: 'A',
           atomName: 'a',
+          number: 1,
+        }, {
+          labelName: '活动2',
+          indexNum: 2,
+          activityName: 'B',
+          atomName: 'b',
           number: 1,
         }],
       };

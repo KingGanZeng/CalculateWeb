@@ -46,11 +46,6 @@ export default {
       type: Object,
     },
   },
-  data() {
-    return {
-    };
-  },
-  mounted() {},
   methods: {
     /**
      * 更新步骤数
@@ -85,7 +80,12 @@ export default {
           labelName: '构件1',
           indexNum: 1,
           componentName: 'P',
-          componentCal: 'A;(B||2C)',
+          componentCal: 'A;B',
+        }, {
+          labelName: '构件2',
+          indexNum: 2,
+          componentName: 'Q',
+          componentCal: 'B;A',
         }],
       };
     },

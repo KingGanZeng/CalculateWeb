@@ -10,31 +10,26 @@
 <script>
 export default {
   name: 'Index',
-  data() {
-    return {
-      msg: 'Welcome to Your Vue.js App',
-    };
-  },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
   .index-title {
-    border: 2px solid #999999;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    border-radius: 5px;
-    padding: 40px 20px;
-    margin-top: 10px;
-    position: relative;
-    &:before {
-      position: absolute;
-      top: -20px;
-      background-color: #ffffff;
-      content: '欢迎使用本工具';
-      font-size: 28px;
-      padding: 0 5px;
+      border: 2px solid #999999;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      border-radius: 5px;
+      padding: 40px 20px;
+      margin-top: 10px;
+      position: relative;
+      &:before {
+        position: absolute;
+        top: -20px;
+        background-color: #ffffff;
+        content: '欢迎使用本工具';
+        font-size: 28px;
+        padding: 0 5px;
     }
   }
 </style>

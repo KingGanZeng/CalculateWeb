@@ -32,7 +32,7 @@
             </template>
             <el-menu-item-group>
               <span slot="title">选择输入方式</span>
-              <el-menu-item index="fileLoader">文件导入</el-menu-item>
+              <el-menu-item index="fileLoader" disabled>文件导入</el-menu-item>
               <el-menu-item index="manualLoader">手动输入</el-menu-item>
             </el-menu-item-group>
           </el-submenu>
