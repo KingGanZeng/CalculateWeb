@@ -1,8 +1,8 @@
 <template>
   <el-row class="index">
     <el-col :span="8" class="index-title">
-      本工具主要基于认知复杂度，按软件活动为单位进行复杂度计算<br>
-      提供两种输入方式：手动输入和文件输入
+      本工具主要基于认知复杂度，以软件活动为单位进行复杂度计算<br>
+      提供两种输入方式：文件导入和手动输入
     </el-col>
   </el-row>
 </template>
@@ -16,7 +16,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
   .index-title {
-      border: 2px solid #999999;
+      border: 1px solid #999999;
       -webkit-border-radius: 5px;
       -moz-border-radius: 5px;
       border-radius: 5px;
