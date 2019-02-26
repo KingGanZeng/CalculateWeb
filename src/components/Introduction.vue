@@ -4,12 +4,12 @@
       <ul>
         <li class="half-border-bottom" style="padding: 10px 0;">
           <el-row type="flex">
-            <el-col :span="2">
+            <el-col :span="3">
               <el-tag>活动定义</el-tag>
             </el-col>
             <el-col style="font-size: 14px;line-height: 25px;padding-top: 4px;" :span="16">
               本工具以活动为最小计算单元，活动用小写字母(a-z)表示，
-              每个活动的 <a href="https://www.testwo.com/article/1210">认知复杂度</a> 用数字表示。<br>
+              每个活动的 <a href="https://www.testwo.com/article/1210" target="_blank">认知复杂度</a> 用数字表示。<br>
               活动的定义用中括号包裹，例如 [a, 3]，然后用大写字母(A-Z)来命名。 <br>
               输入格式： A = [a, 3]，命名不可重复。
             </el-col>
@@ -17,11 +17,11 @@
         </li>
         <li class="half-border-bottom" style="padding: 10px 0;">
           <el-row type="flex">
-            <el-col :span="2">
+            <el-col :span="3">
               <el-tag type="warning">构件定义</el-tag>
             </el-col>
             <el-col style="font-size: 14px;line-height: 25px;padding-top: 4px;" :span="16">
-              构件由一个或多个活动构成，活动重复出现在同一构件中，例如：P = A ; A。<br>
+              构件由一个或多个活动构成，允许活动重复出现在同一构件中，例如：P = A ; A。<br>
               构件支持优先级计算，可用括号表示优先计算的部分，例如：P = A ; ( B #2 C)。<br>
               构件命名不可重复。
             </el-col>
@@ -29,7 +29,7 @@
         </li>
         <li style="padding: 10px 0 0;">
           <el-row type="flex">
-            <el-col :span="2">
+            <el-col :span="3">
               <el-tag type="danger">架构输入</el-tag>
             </el-col>
             <el-col style="font-size: 14px;line-height: 25px;padding-top: 4px;" :span="16">
