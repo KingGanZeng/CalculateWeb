@@ -83,7 +83,7 @@ export default {
         { character: ';', intro: '顺序计算', type: 'Sequential', needParam: false, example: 'P=A;B' },
         { character: '#', intro: '选择计算', type: 'Choice', needParam: true, example: 'P=A#2B' },
         { character: '@', intro: '调用计算', type: 'Call', needParam: true, example: 'P=A@2B' },
-        { character: '||', intro: '同步计算', type: 'Parallel', needParam: true, example: 'P=A||2B' },
+        { character: '||', intro: '并发计算', type: 'Parallel', needParam: true, example: 'P=A||2B' },
       ],
     };
   },

@@ -1,11 +1,22 @@
 <template>
   <el-container>
     <el-header>
-      <span style="font-size: 18px;">{{translateName.headerName}}</span>
-      <!--<span style="float: right;">-->
-        <!--<a href="#" @click="changeLanguage">中文</a>/-->
-        <!--<a href="#" @click="changeLanguage">English</a>-->
-      <!--</span>-->
+      <span style="font-size: 18px;">{{ this.$t('localization.title') }}</span>
+      <span style="float: right;">
+        <el-select
+          v-model="value"
+          @change="switchLanguage(value)"
+          class="el-select"
+          size="small"
+        >
+          <el-option
+            v-for="item in language"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
+      </span>
     </el-header>
     <el-container>
       <el-aside>
@@ -23,32 +34,32 @@
                  active-text-color="#ffd04b">
           <el-menu-item index="/">
             <i class="icon-home"></i>
-            <span slot="title">首页</span>
+            <span slot="title">{{ this.$t('localization.navBar.mainPage') }}</span>
           </el-menu-item>
           <el-submenu index="1">
             <template slot="title">
               <i class="icon-stack"></i>
-              <span slot="title">工具使用</span>
+              <span slot="title">{{ this.$t('localization.navBar.useWay') }}</span>
             </template>
             <el-menu-item-group>
-              <span slot="title">选择输入方式</span>
+              <span slot="title">{{ this.$t('localization.navBar.chooseWay') }}</span>
               <el-menu-item index="fileLoader">
                 <template slot="title">
                   <i class="icon-upload"></i>
-                  <span slot="title">文件导入</span>
+                  <span slot="title">{{ this.$t('localization.navBar.fileImport') }}</span>
                 </template>
               </el-menu-item>
               <el-menu-item index="manualLoader">
                 <template slot="title">
                   <i class="icon-keyboard"></i>
-                  <span slot="title">手动输入</span>
+                  <span slot="title">{{ this.$t('localization.navBar.manuallyEnter') }}</span>
                 </template>
               </el-menu-item>
             </el-menu-item-group>
           </el-submenu>
           <el-menu-item index="/introduction">
             <i class="icon-file-text2"></i>
-            <span slot="title">使用说明</span>
+            <span slot="title">{{ this.$t('localization.navBar.docs') }}</span>
           </el-menu-item>
         </el-menu>
       </el-aside>
@@ -74,15 +85,19 @@ export default {
   router,
   data() {
     return {
-      translateName: {
-        headerName: '软件构件复杂度计算工具',
-        navName: ['工具说明', '运行计算'],
-      },
       isCollapse: true,
       beActive: [], // 激活class
+      value: this.$i18n.locale === 'en' ? 'English' : '简体中文',
+      language: [
+        { value: 'en-US', label: 'English' },
+        { value: 'zh-CN', label: '简体中文' },
+      ],
     };
   },
   methods: {
+    /**
+     * 侧边栏展开/缩小
+     */
     changeCollapse() {
       this.isCollapse = !this.isCollapse;
       this.beActive = this.isCollapse ? [] : ['isActive'];
@@ -93,16 +108,15 @@ export default {
     handleClose(key, keyPath) {
       console.log(key, keyPath);
     },
-    changeLanguage() {
-      const Chinese = {
-        English: 'Software component complexity calculation tool',
-        navName: ['Tool description', 'Run Program'],
-      };
-      const English = {
-        headerName: '软件构件复杂度计算工具',
-        navName: ['工具说明', '运行计算'],
-      };
-      console.log(Chinese, English);
+    switchLanguage() {
+      if (this.value === 'zh-CN') {
+        this.$i18n.locale = 'zh-CN';
+      } else if (this.value === 'en-US') {
+        this.$i18n.locale = 'en-US';
+      }
+      // eslint-disable-next-line
+      const _this = this;
+      this.$cookie.set('DefaultLanguage', (_this.value), { expires: '30m' });
     },
   },
 };
@@ -175,5 +189,36 @@ export default {
       color: #ffd04b;
       transform: rotate(180deg);
     }
+  }
+  /*样式覆写*/
+  .el-select {
+    .el-input__inner {
+      background: #545c64;
+      color: #ffffff;
+    }
+  }
+  .el-select .el-input.is-focus .el-input__inner {
+    border-color: #ffd04b;
+  }
+  .el-select .el-input__inner:focus {
+    border-color: #ffd04b;
+  }
+  .el-select-dropdown__list {
+    background: #545c64;
+    .el-select-dropdown__item {
+      color: #ffffff;
+    }
+  }
+  .el-select-dropdown__item.selected {
+    color: #ffd04b;
+  }
+  .el-select-dropdown__item.hover {
+    background-color: rgb(67, 74, 80);
+  }
+  .popper__arrow {
+    border-bottom-color: #545c64;
+  }
+  .el-popper[x-placement^=bottom] .popper__arrow::after {
+    border-bottom-color: #545c64;
   }
 </style>

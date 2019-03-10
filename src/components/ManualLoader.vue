@@ -3,21 +3,23 @@
         <el-row class="manual-loader-header">
             <el-col>
                 <el-steps :active="inputComplete" align-center>
-                    <el-step title="步骤1"
-                             description="请输入活动定义"></el-step>
-                    <el-step title="步骤2"
-                             description="请输入构件定义"></el-step>
-                    <el-step title="步骤3"
-                             description="请输入软件架构"></el-step>
-                    <el-step title="步骤4"
-                             description="确认输入，等待计算结果"></el-step>
+                    <el-step :title="this.$t('localization.type')==='English'? 'Step 1' : '步骤1'"
+                             :description="this.$t('localization.stepDes.stepOne')"></el-step>
+                    <el-step :title="this.$t('localization.type')==='English'? 'Step 2' : '步骤2'"
+                             :description="this.$t('localization.stepDes.stepTwo')"></el-step>
+                    <el-step :title="this.$t('localization.type')==='English'? 'Step 3' : '步骤3'"
+                             :description="this.$t('localization.stepDes.stepThree')"></el-step>
+                    <el-step :title="this.$t('localization.type')==='English'? 'Step 4' : '步骤4'"
+                             :description="this.$t('localization.stepDes.stepFour')"></el-step>
                 </el-steps>
             </el-col>
         </el-row>
         <el-row class="manual-loader-container">
             <el-col class="manual-activities border-shadow">
-                <div class="title">活动定义</div>
-                <div class="example">例如：A=[a,1]</div>
+                <div class="title">{{this.$t('localization.activityDefine')}}</div>
+                <div class="example">{{this.$t('localization.type')
+                  ==='English'? 'e.g. ' : '例如：'}} A=[a,1]
+                </div>
                 <div class="input-wrapper"
                     is="activity-form"
                     :activities="activities"
@@ -25,8 +27,10 @@
                 </div>
             </el-col>
             <el-col class="manual-components border-shadow">
-                <div class="title">构件定义</div>
-                <div class="example">例如：P=A;(B||2C)</div>
+                <div class="title">{{this.$t('localization.componentDefine')}}</div>
+                <div class="example">{{this.$t('localization.type')
+                  ==='English'? 'e.g. ' : '例如：'}} P=A;(B||2C)
+                </div>
                 <div class="input-wrapper"
                      is="component-form"
                      :components="components"
@@ -35,7 +39,9 @@
             </el-col>
             <el-col class="manual-architecture border-shadow">
                 <div class="title">软件架构</div>
-                <div class="example">例如：P||2Q#3W</div>
+                <div class="example">{{this.$t('localization.type')
+                  ==='English'? 'e.g. ' : '例如：'}} P||2Q#3W
+                </div>
                 <div class="input-wrapper">
                     <el-form class="input-item"
                              ref="form"
@@ -129,13 +135,13 @@ export default {
       inputComplete: 0, // 当前完成步骤数
       activities: {
         list: [{
-          labelName: '活动1',
+          labelName: `${this.$t('localization.type') === 'English' ? 'activity' : '活动'}1`,
           indexNum: 1,
           activityName: 'A',
           atomName: 'a',
           number: 1,
         }, {
-          labelName: '活动2',
+          labelName: `${this.$t('localization.type') === 'English' ? 'activity' : '活动'}2`,
           indexNum: 2,
           activityName: 'B',
           atomName: 'b',
@@ -307,6 +313,7 @@ export default {
         margin: 10px 0 18px;
         color: #999999;
         font-size: 14px;
+        white-space: pre-line;
     }
 
     .average {

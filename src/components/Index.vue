@@ -1,8 +1,7 @@
 <template>
   <el-row class="index">
-    <el-col :span="8" class="index-title">
-      本工具主要基于认知复杂度，以软件活动为单位进行复杂度计算<br>
-      提供两种输入方式：文件导入和手动输入
+    <el-col :span="this.$t('localization.type')==='English'? 12 : 8" class="index-title">
+      {{this.$t('localization.indexTitle')}}
     </el-col>
   </el-row>
 </template>
@@ -20,14 +19,16 @@ export default {
       -webkit-border-radius: 5px;
       -moz-border-radius: 5px;
       border-radius: 5px;
-      padding: 40px 20px;
+      padding: 20px 20px 30px;
       margin-top: 10px;
       position: relative;
+      white-space: pre-line;
+      transition: ease-in-out .3s;
       &:before {
         position: absolute;
         top: -20px;
         background-color: #ffffff;
-        content: '欢迎使用本工具';
+        content: 'Welcome';
         font-size: 28px;
         padding: 0 5px;
     }
