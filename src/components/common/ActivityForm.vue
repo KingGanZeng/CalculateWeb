@@ -3,11 +3,11 @@
         <el-form class="input-item"
                  ref="form"
                  :model="activities"
-                 size="mini">
-            <el-form-item label-width="60px"
-                          :label='item.labelName'
+                 size="medium">
+            <el-form-item :label='formatLabelName(item.labelName)'
                           inline
                           v-for="item in activities.list"
+                          class="form-wrapper"
                           :key="item.indexNum">
                 <el-col :span="8">
                     <el-col :span="5">
@@ -31,19 +31,26 @@
             </el-form-item>
         </el-form>
         <div class="plus-and-remove-button">
-            <i class="el-icon-circle-plus-outline"
+            <i class="el-icon-circle-plus-outline el-icon-padding"
                 @click="addActivity"></i>
-            <i class="el-icon-remove-outline"
+            <i class="el-icon-remove-outline el-icon-padding"
                 @click="removeActivity"></i>
         </div>
         <el-button type="primary"
-                   size="small"
+                   size="medium"
                    round
-                   @click="activitiesSubmit">下一步</el-button>
+                   @click="activitiesSubmit"
+        >
+            {{this.$t('localization.type') === 'English' ? 'Next' : '下一步'}}
+        </el-button>
         <el-button
-                size="small"
+                size="medium"
                 round
-                @click="resetActivities">重置</el-button>
+                @click="resetActivities"
+                icon="el-icon-refresh"
+        >
+            {{this.$t('localization.type') === 'English' ? 'Reset' : '重置'}}
+        </el-button>
     </div>
 </template>
 
@@ -57,6 +64,12 @@ export default {
   },
   methods: {
     /**
+     * 用于切换中英文
+     */
+    formatLabelName(labelName) {
+      return this.$t('localization.type') === 'English' ? `activity ${labelName}` : `活动 ${labelName}`;
+    },
+    /**
      * 更新步骤数
      */
     activitiesSubmit() {
@@ -68,7 +81,7 @@ export default {
     addActivity() {
       const index = this.activities.list.length + 1;
       this.activities.list.push({
-        labelName: `活动${index}`,
+        labelName: index,
         indexNum: index,
         activityName: '',
         atomName: '',
@@ -86,13 +99,13 @@ export default {
     resetActivities() {
       this.activities = {
         list: [{
-          labelName: '活动1',
+          labelName: '1',
           indexNum: 1,
           activityName: 'A',
           atomName: 'a',
           number: 1,
         }, {
-          labelName: '活动2',
+          labelName: '2',
           indexNum: 2,
           activityName: 'B',
           atomName: 'b',
@@ -106,9 +119,8 @@ export default {
 
 <style scoped lang="less">
     .plus-and-remove-button {
-        width: 60px;
         margin-bottom: 18px;
-        text-align: center;
+        text-align: left;
         &:hover {
             cursor: pointer;
         }
@@ -129,5 +141,9 @@ export default {
     .line {
         text-align: center;
         white-space: pre-wrap;
+    }
+
+    .el-icon-padding {
+        padding: 10px;
     }
 </style>

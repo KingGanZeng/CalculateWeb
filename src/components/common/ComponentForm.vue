@@ -3,9 +3,8 @@
         <el-form class="input-item"
                  ref="form"
                  :model="components"
-                 size="mini">
-            <el-form-item label-width="60px"
-                          :label="item.labelName"
+                 size="medium">
+            <el-form-item :label="formatLabelName(item.labelName)"
                           inline
                           v-for="item in components.list"
                           :key="item.indexNum">
@@ -28,13 +27,20 @@
            @click="removeComponent"></i>
       </div>
         <el-button type="primary"
-                   size="small"
+                   size="medium"
                    round
-                   @click="componentsSubmit">下一步</el-button>
+                   @click="componentsSubmit"
+        >
+            {{this.$t('localization.type') === 'English' ? 'Next' : '下一步'}}
+        </el-button>
         <el-button
-                size="small"
+                size="medium"
                 round
-                @click="resetComponents">重置</el-button>
+                @click="resetComponents"
+                icon="el-icon-refresh"
+        >
+            {{this.$t('localization.type') === 'English' ? 'Reset' : '重置'}}
+        </el-button>
     </div>
 </template>
 
@@ -48,6 +54,12 @@ export default {
   },
   methods: {
     /**
+     * 用于切换中英文
+     */
+    formatLabelName(labelName) {
+      return this.$t('localization.type') === 'English' ? `component ${labelName}` : `构件 ${labelName}`;
+    },
+    /**
      * 更新步骤数
      */
     componentsSubmit() {
@@ -59,7 +71,7 @@ export default {
     addComponent() {
       const index = this.components.list.length + 1;
       this.components.list.push({
-        labelName: `构件${index}`,
+        labelName: `${index}`,
         indexNum: index,
         componentName: '',
         componentCal: '',
@@ -77,12 +89,12 @@ export default {
     resetComponents() {
       this.components = {
         list: [{
-          labelName: '构件1',
+          labelName: '1',
           indexNum: 1,
           componentName: 'P',
           componentCal: 'A;B',
         }, {
-          labelName: '构件2',
+          labelName: '2',
           indexNum: 2,
           componentName: 'Q',
           componentCal: 'B;A',

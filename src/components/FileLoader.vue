@@ -3,14 +3,18 @@
         <el-row class="file-loader-header">
             <el-col>
                 <el-steps :active="inputComplete" align-center>
-                    <el-step title="步骤1"
-                             description="选择文件"></el-step>
-                    <el-step title="步骤2"
-                             description="本地文件解析"></el-step>
-                    <el-step title="步骤3"
-                             description="确认文件内容"></el-step>
-                    <el-step title="步骤4"
-                             description="确认输入，等待计算结果"></el-step>
+                    <el-step :title="this.$t('localization.type')==='English'? 'Step 1' : '步骤1'"
+                             :description="this.$t('localization.stepFileDes.stepOne')"
+                    ></el-step>
+                    <el-step :title="this.$t('localization.type')==='English'? 'Step 2' : '步骤2'"
+                             :description="this.$t('localization.stepFileDes.stepTwo')"
+                    ></el-step>
+                    <el-step :title="this.$t('localization.type')==='English'? 'Step 3' : '步骤3'"
+                             :description="this.$t('localization.stepFileDes.stepThree')"
+                    ></el-step>
+                    <el-step :title="this.$t('localization.type')==='English'? 'Step 4' : '步骤4'"
+                             :description="this.$t('localization.stepFileDes.stepFour')"
+                    ></el-step>
                 </el-steps>
             </el-col>
         </el-row>
@@ -28,14 +32,29 @@
                             v-loading="loading"
                             :file-list="fileList">
                         <i class="el-icon-upload"></i>
-                        <div class="el-upload__text">将文件拖到此处，或<em>点击选择</em></div>
-                        <div class="el-upload__tip" slot="tip">只能上传文本文件，且不超过1M</div>
+                        <div class="el-upload__text">
+                            {{this.$t('localization.type') === 'English' ?
+                            'Drag files here, or' :
+                            '将文件拖到此处，或'}}
+                            <em>{{this.$t('localization.type') === 'English' ?
+                                'click to select' :
+                                '点击选择'}}</em>
+                        </div>
+                        <div class="el-upload__tip" slot="tip">
+                            {{this.$t('localization.type') === 'English' ?
+                            'Only text files can be uploaded and no more than 1M' :
+                            '只能上传文本文件，且不超过1M'}}
+                        </div>
                     </el-upload>
                     <div style="display:inline-block; margin-top: 18px;">
                         <el-button type="primary"
                                 round
-                                size="small"
-                                @click="fileConfirmed">上传</el-button>
+                                size="medium"
+                                @click="fileConfirmed">
+                            {{this.$t('localization.type') === 'English' ?
+                            'Submit' :
+                            '上传'}}
+                        </el-button>
                     </div>
                 </div>
             </el-col>
@@ -49,12 +68,18 @@
                 <div style="text-align: center;">
                     <el-button round
                             type="primary"
-                            size="small"
-                            @click="uploadConfirmed">确认</el-button>
+                            size="medium"
+                            @click="uploadConfirmed">
+                        {{this.$t('localization.type') === 'English' ?
+                        'Confirm' :
+                        '确认'}}
+                    </el-button>
                 </div>
             </el-col>
             <el-col class="file-result border-shadow" v-if="result.length > 0">
-                <div class="title">结果输出</div>
+                <div class="title">
+                    {{this.$t('localization.result')}}
+                </div>
                 <div class="result">
                     <el-table
                             :data="result"
@@ -65,7 +90,8 @@
                                 width="50">
                         </el-table-column>
                         <el-table-column
-                                label="路径">
+                                label="this.$t('localization.trace')"
+                        >
                             <template slot-scope="scope">
                                 <div slot="reference" class="name-wrapper">
                                     <el-tag size="medium">{{
@@ -75,12 +101,13 @@
                             </template>
                         </el-table-column>
                         <el-table-column
-                                label="结果">
+                                :label="this.$t('localization.value')"
+                        >
                             <template slot-scope="scope">
                                 <div slot="reference" class="name-wrapper">
                                     <div>{{
                                         scope.row.split('=')[1].trim() === '-1.0' ?
-                                        '死锁' : scope.row.split('=')[1].trim()
+                                        'Deadlock' : scope.row.split('=')[1].trim()
                                         }}</div>
                                 </div>
                             </template>
@@ -88,17 +115,22 @@
                     </el-table>
                 </div>
                 <div class="average" v-if="confirmAverage">
-                    是否计算平均值?
+                    {{this.$t('localization.type') === 'English' ?
+                    'Calculate the average?' : '是否计算平均值？'}}
                     <span style="display: inline-block;margin-left: 10px;" >
                         <el-button
-                                size="mini"
+                                size="small"
                                 round
-                                @click="calculateAverage">是</el-button>
+                                @click="calculateAverage">
+                            {{this.$t('localization.type') === 'English' ? 'Yes' : '是'}}
+                        </el-button>
                         <el-button
                                 type="info"
-                                size="mini"
+                                size="small"
                                 round
-                                @click="denyAverage">否</el-button>
+                                @click="denyAverage">
+                            {{this.$t('localization.type') === 'English' ? 'No' : '否'}}
+                        </el-button>
                     </span>
                 </div>
             </el-col>
@@ -159,7 +191,13 @@ export default {
      * @returns {Promise<MessageBoxData> | *}
      */
     beforeRemove(file) {
-      return this.$confirm(`确定移除 ${file.name}？`);
+      return this.$confirm(`${this.$t('localization.confirmDelete')} ${file.name}？`,
+        this.$t('localization.confirmTitle'),
+        {
+          confirmButtonText: this.$t('localization.confirm'),
+          cancelButtonText: this.$t('localization.cancel'),
+          type: 'warning',
+        });
     },
     /**
      * 文件发生变更时，保持只有一个文件

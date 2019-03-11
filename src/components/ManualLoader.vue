@@ -38,7 +38,7 @@
                 </div>
             </el-col>
             <el-col class="manual-architecture border-shadow">
-                <div class="title">软件架构</div>
+                <div class="title">{{this.$t('localization.systemArchitect')}}</div>
                 <div class="example">{{this.$t('localization.type')
                   ==='English'? 'e.g. ' : '例如：'}} P||2Q#3W
                 </div>
@@ -46,27 +46,29 @@
                     <el-form class="input-item"
                              ref="form"
                              :model="architecture"
-                             size="mini">
+                             size="medium">
                         <el-form-item prop="calculate"
-                            :rules="{
-                                required: true, message: '请输入软件架构', trigger: 'blur'
-                            }">
+                            :rules="this.$t('localization.type') ==='English' ?
+                            requiredRules : requiredRulesChinese">
                             <el-col :span="8">
                                 <el-input v-model="architecture.calculate" clearable></el-input>
                             </el-col>
                         </el-form-item>
                         <el-form-item>
                             <el-button type="primary"
-                                size="small"
+                                size="medium"
                                 round
                                 @click="onSubmit"
-                                 :loading="isSubmitting">提交</el-button>
+                                 :loading="isSubmitting"
+                            >
+                                {{this.$t('localization.type') ==='English' ? 'Submit' : '提交'}}
+                            </el-button>
                         </el-form-item>
                     </el-form>
                 </div>
             </el-col>
             <el-col class="manual-result border-shadow">
-                <div class="title">结果输出</div>
+                <div class="title">{{this.$t('localization.result')}}</div>
                 <div class="result">
                     <el-table
                     :data="result"
@@ -77,7 +79,7 @@
                             width="50">
                         </el-table-column>
                         <el-table-column
-                            label="路径">
+                            :label="this.$t('localization.trace')">
                             <template slot-scope="scope">
                                 <div slot="reference" class="name-wrapper">
                                     <el-tag size="medium">{{
@@ -87,12 +89,12 @@
                             </template>
                         </el-table-column>
                         <el-table-column
-                            label="结果">
+                                :label="this.$t('localization.value')">
                             <template slot-scope="scope">
                                 <div slot="reference" class="name-wrapper">
                                     <div>{{
                                         scope.row.split('=')[1].trim() === '-1.0' ?
-                                        '死锁' : scope.row.split('=')[1].trim()
+                                        'Deadlock' : scope.row.split('=')[1].trim()
                                     }}</div>
                                 </div>
                             </template>
@@ -100,17 +102,22 @@
                     </el-table>
                 </div>
                 <div class="average" v-if="confirmAverage">
-                    是否计算平均值?
+                    {{this.$t('localization.type') === 'English' ?
+                    'Calculate the average?' : '是否计算平均值？'}}
                     <span style="display: inline-block;margin-left: 10px;" >
                         <el-button
-                            size="mini"
+                            size="small"
                             round
-                            @click="calculateAverage">是</el-button>
+                            @click="calculateAverage">
+                            {{this.$t('localization.type') === 'English' ? 'Yes' : '是'}}
+                        </el-button>
                         <el-button
                             type="info"
-                            size="mini"
+                            size="small"
                             round
-                            @click="denyAverage">否</el-button>
+                            @click="denyAverage">
+                            {{this.$t('localization.type') === 'English' ? 'No' : '否'}}
+                        </el-button>
                     </span>
                 </div>
             </el-col>
@@ -135,13 +142,13 @@ export default {
       inputComplete: 0, // 当前完成步骤数
       activities: {
         list: [{
-          labelName: `${this.$t('localization.type') === 'English' ? 'activity' : '活动'}1`,
+          labelName: '1',
           indexNum: 1,
           activityName: 'A',
           atomName: 'a',
           number: 1,
         }, {
-          labelName: `${this.$t('localization.type') === 'English' ? 'activity' : '活动'}2`,
+          labelName: '2',
           indexNum: 2,
           activityName: 'B',
           atomName: 'b',
@@ -150,12 +157,12 @@ export default {
       },
       components: {
         list: [{
-          labelName: '构件1',
+          labelName: '1',
           indexNum: 1,
           componentName: 'P',
           componentCal: 'A;B',
         }, {
-          labelName: '构件2',
+          labelName: '2',
           indexNum: 2,
           componentName: 'Q',
           componentCal: 'B;A',
@@ -163,6 +170,16 @@ export default {
       },
       architecture: {
         calculate: 'P||1Q',
+      },
+      requiredRules: {
+        required: true,
+        message: 'Please input system architecture',
+        trigger: 'blur',
+      },
+      requiredRulesChinese: {
+        required: true,
+        message: '请输入活动名称',
+        trigger: 'blur',
       },
       isSubmitting: false, // 提交状态
       result: [], // 最终结果
@@ -185,7 +202,9 @@ export default {
       if (this.activities.list.length < 1
         || this.architecture.calculate < 1) {
         this.$message({
-          message: '警告，请确认活动及架构定义不为空',
+          message: this.$t('localization.type') === 'English' ?
+            'Please confirm that the activities and schema definition are not empty!' :
+            '警告，请确认活动及架构定义不为空',
           type: 'warning',
         });
         this.isSubmitting = false;
@@ -222,7 +241,9 @@ export default {
           console.log('结果', this.result);
         })
         .catch((response) => {
-          this.$message.error('计算出错，请确认输入是否正确');
+          this.$message.error(this.$t('localization.type') === 'English' ?
+            'Calculation error, please confirm that the input is correct.' :
+            '计算出错，请确认输入是否正确');
           this.isSubmitting = false;
           console.log(response);
         });
