@@ -22,13 +22,14 @@ Vue.use(ElementUI, { locale });
  * @return {string}
  */
 function InitLanguage() {
-  return Vue.cookie.get('PCDefaultLanguage') == null ? 'en' : Vue.cookie.get('DefaultLanguage');
+  console.log(Vue.cookie.get('DefaultLanguage'));
+  return Vue.cookie.get('DefaultLanguage') == null ? 'en' : Vue.cookie.get('DefaultLanguage');
 }
 const i18n = new VueI18n({
   locale: InitLanguage(),
   messages: {
     // eslint-disable-next-line
-    'en-US': Object.assign(require('../static/lang/en'), enLocale),
+    'en': Object.assign(require('../static/lang/en'), enLocale),
     // eslint-disable-next-line
     'zh-CN': Object.assign(require('../static/lang/zh-CN'), zhLocale),
   },

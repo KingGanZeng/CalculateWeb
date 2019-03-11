@@ -1,11 +1,15 @@
 <template>
   <el-row class="introduction">
-    <el-col :span="16" class="introduction-title">
+    <el-col :span="16"
+            class="introduction-title"
+            :class="this.$t('localization.type') === 'English' ? 'en' : 'zh-cn'">
       <ul>
         <li class="half-border-bottom" style="padding: 10px 0;">
           <el-row type="flex">
             <el-col :span="3">
-              <el-tag>活动定义</el-tag>
+              <el-tag class="tag-font"
+                      color="#409EFF"
+              >{{this.$t('localization.activityDefine')}}</el-tag>
             </el-col>
             <el-col style="font-size: 14px;line-height: 25px;padding-top: 4px;" :span="16">
               本工具以活动为最小计算单元，活动用小写字母(a-z)表示，
@@ -18,7 +22,9 @@
         <li class="half-border-bottom" style="padding: 10px 0;">
           <el-row type="flex">
             <el-col :span="3">
-              <el-tag type="warning">构件定义</el-tag>
+              <el-tag class="tag-font"
+                      color="#E6A23C"
+              >{{this.$t('localization.componentDefine')}}</el-tag>
             </el-col>
             <el-col style="font-size: 14px;line-height: 25px;padding-top: 4px;" :span="16">
               构件由一个或多个活动构成，允许活动重复出现在同一构件中，例如：P = A ; A。<br>
@@ -30,7 +36,9 @@
         <li style="padding: 10px 0 0;">
           <el-row type="flex">
             <el-col :span="3">
-              <el-tag type="danger">架构输入</el-tag>
+              <el-tag  class="tag-font"
+                       color="#F56C6C"
+              >{{this.$t('localization.systemArchitect')}}</el-tag>
             </el-col>
             <el-col style="font-size: 14px;line-height: 25px;padding-top: 4px;" :span="16">
               软件的架构可包含构件和活动，并作为计算式发送给后台进行计算，<br>
@@ -40,33 +48,40 @@
         </li>
       </ul>
     </el-col>
-    <el-col :span="16" class="character-title">
+    <el-col :span="16"
+            class="character-title"
+            :class="this.$t('localization.type') === 'English' ? 'en' : 'zh-cn'"
+    >
       <el-table
-              :data="characterArr"
+              :data="this.$t('localization.type') === 'English' ?
+              characterArr : characterArrChinese"
+              class="character-wrapper"
       >
         <el-table-column
+                width="100px;"
                 prop="character"
-                label="符号">
+                :label="this.$t('localization.symbol')">
         </el-table-column>
         <el-table-column
                 prop="intro"
-                label="说明">
+                :label="this.$t('localization.desc')">
         </el-table-column>
         <el-table-column
                 prop="type"
-                label="类型">
+                :label="this.$t('localization.symbolType')">
         </el-table-column>
         <el-table-column
-                label="需要参数">
+                :label="this.$t('localization.needParam')">
           <template slot-scope="scope">
             <div slot="reference" class="needParam-wrapper">
-              {{ scope.row.needParam === true ? '是' : '否' }}
+              <i v-if="scope.row.needParam === true" class="icon icon-checkmark"></i>
+              <i v-if="scope.row.needParam === false" class="icon icon-cross"></i>
             </div>
           </template>
         </el-table-column>
         <el-table-column
                 prop="example"
-                label="示例">
+                :label="this.$t('localization.example')">
         </el-table-column>
       </el-table>
     </el-col>
@@ -79,12 +94,19 @@ export default {
   data() {
     return {
       characterArr: [
+        { character: '*', intro: 'For multiplication calculation', type: 'Multiplication', needParam: false, example: 'P=3*A' },
+        { character: ';', intro: 'For sequential structure', type: 'Sequential', needParam: false, example: 'P=A;B' },
+        { character: '#', intro: 'For Choice structures', type: 'Choice', needParam: true, example: 'P=A#2B' },
+        { character: '@', intro: 'For Call structures', type: 'Call', needParam: true, example: 'P=A@2B' },
+        { character: '||', intro: 'For Concurrent structure', type: 'Parallel', needParam: true, example: 'P=A||2B' },
+      ],
+      characterArrChinese: [
         { character: '*', intro: '乘法计算', type: 'Multiplication', needParam: false, example: 'P=3*A' },
         { character: ';', intro: '顺序计算', type: 'Sequential', needParam: false, example: 'P=A;B' },
         { character: '#', intro: '选择计算', type: 'Choice', needParam: true, example: 'P=A#2B' },
         { character: '@', intro: '调用计算', type: 'Call', needParam: true, example: 'P=A@2B' },
         { character: '||', intro: '并发计算', type: 'Parallel', needParam: true, example: 'P=A||2B' },
-      ],
+      ]
     };
   },
 };
@@ -110,15 +132,31 @@ export default {
 
   .introduction-title {
     .same-title();
-    &:before {
+    &.zh-cn:before {
       content: '使用说明';
+    }
+    &.en:before {
+      content: 'Introductions';
+    }
+    .tag-font {
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: bold;
     }
   }
 
   .character-title {
     .same-title();
-    &:before {
+    &.en:before {
+      content: 'Symbol';
+    }
+    &.zh-cn:before {
       content: '符号说明';
     }
+  }
+
+  .character-wrapper {
+    font-size: 14px;
+    font-weight: bold;
   }
 </style>

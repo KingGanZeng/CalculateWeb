@@ -35,5 +35,11 @@ module.exports = {
     confirmTitle: 'Warning',
     confirm: 'confirm',
     cancel: 'cancel',
+    intro: 'Introduction',
+    symbol: 'Symbol',
+    desc: 'Description',
+    symbolType: 'Type',
+    needParam: 'Need Param',
+    example: 'Example',
   },
 };

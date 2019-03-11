@@ -35,5 +35,11 @@ module.exports = {
     confirmTitle: '提示',
     confirm: '确认',
     cancel: '取消',
+    intro: '说明',
+    symbol: '操作符',
+    desc: '描述',
+    symbolType: '类型',
+    needParam: '是否需要参数',
+    example: '样例',
   },
 };

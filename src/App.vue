@@ -89,7 +89,7 @@ export default {
       beActive: [], // 激活class
       value: this.$i18n.locale === 'en' ? 'English' : '简体中文',
       language: [
-        { value: 'en-US', label: 'English' },
+        { value: 'en', label: 'English' },
         { value: 'zh-CN', label: '简体中文' },
       ],
     };
@@ -111,8 +111,8 @@ export default {
     switchLanguage() {
       if (this.value === 'zh-CN') {
         this.$i18n.locale = 'zh-CN';
-      } else if (this.value === 'en-US') {
-        this.$i18n.locale = 'en-US';
+      } else if (this.value === 'en') {
+        this.$i18n.locale = 'en';
       }
       // eslint-disable-next-line
       const _this = this;
