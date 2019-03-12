@@ -6,7 +6,7 @@
       <ul>
         <li class="half-border-bottom" style="padding: 10px 0;">
           <el-row type="flex">
-            <el-col :span="3">
+            <el-col :span="5">
               <el-tag class="tag-font"
                       color="#409EFF"
               >{{this.$t('localization.activityDefine')}}</el-tag>
@@ -21,7 +21,7 @@
         </li>
         <li class="half-border-bottom" style="padding: 10px 0;">
           <el-row type="flex">
-            <el-col :span="3">
+            <el-col :span="5">
               <el-tag class="tag-font"
                       color="#E6A23C"
               >{{this.$t('localization.componentDefine')}}</el-tag>
@@ -35,7 +35,7 @@
         </li>
         <li style="padding: 10px 0 0;">
           <el-row type="flex">
-            <el-col :span="3">
+            <el-col :span="5">
               <el-tag  class="tag-font"
                        color="#F56C6C"
               >{{this.$t('localization.systemArchitect')}}</el-tag>
@@ -106,7 +106,7 @@ export default {
         { character: '#', intro: '选择计算', type: 'Choice', needParam: true, example: 'P=A#2B' },
         { character: '@', intro: '调用计算', type: 'Call', needParam: true, example: 'P=A@2B' },
         { character: '||', intro: '并发计算', type: 'Parallel', needParam: true, example: 'P=A||2B' },
-      ]
+      ],
     };
   },
 };
