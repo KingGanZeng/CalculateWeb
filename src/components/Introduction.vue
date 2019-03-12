@@ -11,11 +11,9 @@
                       color="#409EFF"
               >{{this.$t('localization.activityDefine')}}</el-tag>
             </el-col>
-            <el-col style="font-size: 14px;line-height: 25px;padding-top: 4px;" :span="16">
-              本工具以活动为最小计算单元，活动用小写字母(a-z)表示，
-              每个活动的 <a href="https://www.testwo.com/article/1210" target="_blank">认知复杂度</a> 用数字表示。<br>
-              活动的定义用中括号包裹，例如 [a, 3]，然后用大写字母(A-Z)来命名。 <br>
-              输入格式： A = [a, 3]，命名不可重复。
+            <el-col class="des-wrapper"
+                    :span="16"
+            >{{this.$t('localization.activityDes')}}<i>{{this.$t('localization.noRepeat')}}</i>
             </el-col>
           </el-row>
         </li>
@@ -26,10 +24,9 @@
                       color="#E6A23C"
               >{{this.$t('localization.componentDefine')}}</el-tag>
             </el-col>
-            <el-col style="font-size: 14px;line-height: 25px;padding-top: 4px;" :span="16">
-              构件由一个或多个活动构成，允许活动重复出现在同一构件中，例如：P = A ; A。<br>
-              构件支持优先级计算，可用括号表示优先计算的部分，例如：P = A ; ( B #2 C)。<br>
-              构件命名不可重复。
+            <el-col class="des-wrapper"
+                    :span="16"
+            >{{this.$t('localization.componentDes')}}<i>{{this.$t('localization.noRepeat')}}</i>
             </el-col>
           </el-row>
         </li>
@@ -40,10 +37,9 @@
                        color="#F56C6C"
               >{{this.$t('localization.systemArchitect')}}</el-tag>
             </el-col>
-            <el-col style="font-size: 14px;line-height: 25px;padding-top: 4px;" :span="16">
-              软件的架构可包含构件和活动，并作为计算式发送给后台进行计算，<br>
-              例如： A ; B (( C @2 D) ||2 (E #2 F)) ; H
-            </el-col>
+            <el-col class="des-wrapper"
+                    :span="16"
+            >{{this.$t('localization.systemArchitectDes')}}</el-col>
           </el-row>
         </li>
       </ul>
@@ -158,5 +154,12 @@ export default {
   .character-wrapper {
     font-size: 14px;
     font-weight: bold;
+  }
+
+  .des-wrapper {
+    font-size: 16px;
+    line-height: 25px;
+    padding-top: 4px;
+    white-space: pre-line;
   }
 </style>

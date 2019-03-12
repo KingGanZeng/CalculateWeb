@@ -41,5 +41,16 @@ module.exports = {
     symbolType: 'Type',
     needParam: 'Need Param',
     example: 'Example',
+    noRepeat: 'naming is not repeatable',
+    activityDes: 'This tool uses activity which is represented by lowercase letters like a-z as the minimum calculation unit.\n' +
+      'The cognitive complexity of each activity is represented by numbers.\n' +
+      'The definition of the activity is wrapped in brackets, like: [a, 3], and then named in uppercase letters.\n' +
+      'Input format: A = [a, 3], ',
+    componentDes: 'A component consists of one or more activities, allowing activities to be repeated in the same component, for example: P = A; A.\n' +
+      'The component supports priority calculations, and parentheses can be used to indicate the portion of the priority calculation, for example: P = A; (B #2 C).\n' +
+      'Component ',
+    systemArchitectDes: 'The architecture of the software can include artifacts and activities,\n' +
+      'and will be sent to the background for calculation as a calculation.\n' +
+      'For example: A ; B (( C @2 D) ||2 (E #2 F)) ; H',
   },
 };
