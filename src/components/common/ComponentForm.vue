@@ -21,9 +21,9 @@
             </el-form-item>
         </el-form>
       <div class="plus-and-remove-button">
-        <i class="el-icon-circle-plus-outline"
+        <i class="el-icon-circle-plus-outline el-icon-padding"
            @click="addComponent"></i>
-        <i class="el-icon-remove-outline"
+        <i class="el-icon-remove-outline el-icon-padding"
            @click="removeComponent"></i>
       </div>
         <el-button type="primary"
@@ -106,29 +106,33 @@ export default {
 </script>
 
 <style scoped lang="less">
-    .plus-and-remove-button {
-        width: 60px;
-        margin-bottom: 18px;
-        text-align: center;
-        &:hover {
-            cursor: pointer;
-        }
-        i {
-            font-size: 20px;
-            transition-property: color;
-            transition-duration: .3s;
-            transition-timing-function: ease-out;
-            &:nth-child(2n+1):hover {
-                color: #0aa8f4;
-            }
-            &:nth-child(2n):hover {
-                color: #F56C6C;
-            }
-        }
-    }
+  .plus-and-remove-button {
+      margin-bottom: 18px;
+      text-align: left;
+      &:hover {
+          cursor: pointer;
+      }
+      i {
+          font-size: 20px;
+          transition-property: color;
+          transition-duration: .3s;
+          transition-timing-function: ease-out;
+          &:nth-child(2n+1):hover {
+              color: #0aa8f4;
+          }
+          &:nth-child(2n):hover {
+              color: #F56C6C;
+          }
+      }
+  }
 
-    .line {
+
+  .line {
         text-align: center;
         white-space: pre-wrap;
+    }
+
+    .el-icon-padding {
+        padding: 10px;
     }
 </style>

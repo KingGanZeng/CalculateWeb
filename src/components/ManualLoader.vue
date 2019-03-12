@@ -82,7 +82,11 @@
                             :label="this.$t('localization.trace')">
                             <template slot-scope="scope">
                                 <div slot="reference" class="name-wrapper">
-                                    <el-tag size="medium">{{
+                                    <el-tag class="tag-font"
+                                            color="#ffffff"
+                                            :class="scope.row.split('=')[1].trim() === '-1.0' ?
+                                             redFont : ''"
+                                    >{{
                                         scope.row.split('=')[0].trim()
                                     }}</el-tag>
                                 </div>
@@ -92,7 +96,8 @@
                                 :label="this.$t('localization.value')">
                             <template slot-scope="scope">
                                 <div slot="reference" class="name-wrapper">
-                                    <div>{{
+                                    <div :class="scope.row.split('=')[1].trim() === '-1.0' ?
+                                     redFont : ''">{{
                                         scope.row.split('=')[1].trim() === '-1.0' ?
                                         'Deadlock' : scope.row.split('=')[1].trim()
                                     }}</div>
@@ -185,6 +190,7 @@ export default {
       result: [], // 最终结果
       average: 0, // 平均值
       confirmAverage: true,
+      redFont: 'red-font',
     };
   },
   methods: {
@@ -230,7 +236,7 @@ export default {
      */
     getResult(inputCode) {
       axios
-        .post('Servlet', qs.stringify({
+        .post('http://localhost:9000/javaWeb/Servlet', qs.stringify({
           code: inputCode,
         }))
         .then((response) => {
@@ -351,5 +357,22 @@ export default {
 
     .error-row {
         background: #F56C6C!important;
+    }
+
+    .tag-font {
+      color: #333333;
+      font-size: 16px;
+      font-weight: bold;
+      &.red-font {
+        color: #F56C6C;
+      }
+    }
+
+    .name-wrapper {
+      font-size: 16px;
+      font-weight: bold;
+      .red-font {
+        color: #F56C6C;
+      }
     }
 </style>

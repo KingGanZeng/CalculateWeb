@@ -81,20 +81,23 @@
                     {{this.$t('localization.result')}}
                 </div>
                 <div class="result">
-                    <el-table
-                            :data="result"
-                            style="width: 100%"
-                            :row-class-name="tableRowClassName">
+                    <el-table :data="result"
+                              style="width: 100%"
+                              :row-class-name="tableRowClassName">
                         <el-table-column
                                 type="index"
                                 width="50">
                         </el-table-column>
                         <el-table-column
-                                label="this.$t('localization.trace')"
+                                :label="this.$t('localization.trace')"
                         >
                             <template slot-scope="scope">
                                 <div slot="reference" class="name-wrapper">
-                                    <el-tag size="medium">{{
+                                    <el-tag class="tag-font"
+                                            color="#FFFFFF"
+                                            :class="scope.row.split('=')[1].trim() === '-1.0' ?
+                                            redFont : ''"
+                                    >{{
                                         scope.row.split('=')[0].trim()
                                         }}</el-tag>
                                 </div>
@@ -105,7 +108,8 @@
                         >
                             <template slot-scope="scope">
                                 <div slot="reference" class="name-wrapper">
-                                    <div>{{
+                                    <div :class="scope.row.split('=')[1].trim() === '-1.0' ?
+                                     redFont : ''">{{
                                         scope.row.split('=')[1].trim() === '-1.0' ?
                                         'Deadlock' : scope.row.split('=')[1].trim()
                                         }}</div>
@@ -182,6 +186,7 @@ export default {
       average: 0, // 平均值
       confirmAverage: true,
       isSubmitting: false, // 远端请求状态
+      redFont: 'red-font',
     };
   },
   methods: {
@@ -260,7 +265,7 @@ export default {
       this.inputComplete = 3;
       this.isSubmitting = true;
       axios
-        .post('Servlet', qs.stringify({
+        .post('http://localhost:9000/javaWeb/Servlet', qs.stringify({
           code: this.code,
         }))
         .then((response) => {
@@ -296,7 +301,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="less">
     .file-loader {
         position: relative;
         height: 100%;
@@ -336,5 +341,22 @@ export default {
     .average {
         margin-top: 18px;
         font-size: 14px;
+    }
+
+    .tag-font {
+        color: #333333;
+        font-size: 18px;
+        font-weight: bold;
+      .red-font {
+        color: #F56C6C;
+      }
+    }
+
+    .name-wrapper {
+        font-size: 18px;
+        font-weight: bold;
+        .red-font {
+            color: #F56C6C;
+        }
     }
 </style>
