@@ -265,7 +265,7 @@ export default {
       this.inputComplete = 3;
       this.isSubmitting = true;
       axios
-        .post('http://localhost:9000/javaWeb/Servlet', qs.stringify({
+        .post('Servlet', qs.stringify({
           code: this.code,
         }))
         .then((response) => {

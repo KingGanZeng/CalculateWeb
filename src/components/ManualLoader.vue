@@ -236,7 +236,7 @@ export default {
      */
     getResult(inputCode) {
       axios
-        .post('http://localhost:9000/javaWeb/Servlet', qs.stringify({
+        .post('Servlet', qs.stringify({
           code: inputCode,
         }))
         .then((response) => {
